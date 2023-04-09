@@ -1,5 +1,4 @@
 import rtmidi
-import time
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -11,7 +10,7 @@ midi_out.open_port(PORT)
 def sine_waves(repeat=1):
     """ Function that shows a lot of sine waves modulation shapes """
     t = np.arange(0, 80, 0.1)  # Time
-    amplitude = np.cos(t)  # Height of wave at certain point
+    amplitude = np.sin(t)  # Height of wave at certain point
     print(t)
     print('amplitude', amplitude)
     plt.plot(t, amplitude)  # Draw
@@ -23,7 +22,7 @@ def sine_waves(repeat=1):
 def sine_waves_short(repeat=1):
     """ Function that shows 1 sine wave modulation shape """
     t = np.arange(0, 80, 0.1)  # Time
-    amplitude = np.cos(t)  # Height of wave at certain point
+    amplitude = np.sin(t)  # Height of wave at certain point
 
     # Use list slicing to get smaller range of elements from time & amplitude
     # The smaller the range the more zoomed in the image is
