@@ -1,8 +1,10 @@
 import rtmidi
 import time
+import sys
 from rtmidi.midiconstants import CONTROL_CHANGE
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy import signal
 
 from midi.constants import *
 midi_out = rtmidi.MidiOut()
@@ -34,23 +36,28 @@ def send_mod(amplitude, repeat):
             time.sleep(speed)
 
 
-def sine_waves_short(repeat=1):
-    """ Function that shows 1 sine wave modulation shape """
-    t = np.arange(0, 80, 0.1)  # Time
-    amplitude = np.sin(t)  # Height of wave at certain point
+def modulation_shape(shape: str, speed_of_wave: float, max_duration: float):
+    """ Function that shows modulation shape """
+    # Create a list of values from 0 to the max_duration value with an interval of 0.1
+    x = np.arange(0, max_duration, 0.01)
 
-    # Use list slicing to get smaller range of elements from time & amplitude
-    # The smaller the range the more zoomed in the image is
-    plt.plot(t[1:60], amplitude[1:60])  # Draw
-    plt.title("Modulation Shape")
+    if shape == "sine":
+        y = np.sin(2 * np.pi / speed_of_wave * x)
+    elif shape == "saw":
+        y = signal.sawtooth(2 * np.pi / speed_of_wave * x)
+    elif shape == "square":
+        y = signal.square(2 * np.pi / speed_of_wave * x)
+    else:
+        print("Not valid wave")
+        sys.exit()
+    plt.plot(x, y)
+    plt.ylabel(f"Amplitude = {shape} (time)")
     plt.xlabel("Time")
-    plt.ylabel("Amplitude")
-    plt.grid(True, which="both")
-    plt.axhline(y=0)
-    plt.show()  # Show
-    send_mod(amplitude, repeat)
+    plt.title("Modulation shape")
+    plt.axhline(y=0, color="black")
+    plt.show()
 
 
 
-# sine_waves()
-amp = sine_waves_short()
+
+modulation_shape("sine", 1.0, 2)
