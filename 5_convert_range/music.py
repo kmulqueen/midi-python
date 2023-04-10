@@ -11,7 +11,7 @@ def convert_range(value, in_min, in_max, out_min, out_max):
     l_span = in_max - in_min
     r_span = out_max - out_min
     scaled_value = (value - in_min) / l_span
-    scaled_value = out_min = (scaled_value * r_span)
+    scaled_value = out_min + (scaled_value * r_span)
     return np.round(scaled_value)
 
 

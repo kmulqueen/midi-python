@@ -7,6 +7,7 @@ midi_out.open_port(PORT)
 
 def send_notes(pitch=60, repeat=1):
     for note in range(repeat):
+        print(note)
         note_on = [CHANNEL_1, pitch, 50]
         note_off = [CHANNEL_2, pitch, 0]
         midi_out.send_message(note_on)

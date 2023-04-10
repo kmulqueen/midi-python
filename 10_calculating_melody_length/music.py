@@ -13,6 +13,7 @@ midi_out.open_port(PORT)
 cc_num = 75
 speed = 0.05
 channel = 0
+BPM = 60
 
 # Value you want to convert, input values, output values
 def convert_range(value, in_min, in_max, out_min, out_max):
@@ -58,6 +59,35 @@ def modulation_shape(shape: str, speed_of_wave: float, max_duration: float):
     plt.show()
 
 
+# def duration_of_melody(melody, bpm):
+#     t = 0
+#     for note, dur in melody:
+#         t += duration_to_time_delay(dur, bpm)
+#     return t
 
+def duration_of_melody(melody, bpm):
+    return sum(duration_to_time_delay(duration, bpm) for _, duration in melody)
 
-modulation_shape("sine", 1.0, 2)
+def duration_to_time_delay(duration, bpm):
+    if duration == "w":
+        factor = 4
+    elif duration == "h":
+        factor = 2
+    elif duration == "q":
+        factor = 1
+    elif duration == "e":
+        factor = 0.5
+    elif duration == "s":
+        factor = 0.25
+    else:
+        assert False
+
+    bps = bpm / 60
+    return factor * bps
+
+def main():
+    melody = [(60, "e"), (67, "q"), (62, "q"), (67, "e"), (60, "q")] * 8
+    dur = duration_of_melody(melody, BPM)
+    print(f"Duration of melody: {dur} seconds")
+
+main()
