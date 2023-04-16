@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import signal
 
-from midi.constants import *
+from midi.part_1.constants import *
 midi_out = rtmidi.MidiOut()
 midi_out.open_port(PORT)
 
@@ -15,7 +15,6 @@ channel = 2
 BPM = 60
 
 
-# Value you want to convert, input values, output values
 def convert_range(value, in_min, in_max, out_min, out_max):
     l_span = in_max - in_min
     r_span = out_max - out_min
